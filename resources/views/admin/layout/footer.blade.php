@@ -19,16 +19,22 @@
 <script src="{{ asset('adminn/js/custom.js') }}"></script>
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 <script>
-  @if ($message = Session::get('warning'))
-  // Notifikasi
-  swal ( "Mohon maaf" ,  "<?php echo $message ?>" ,  "warning" )
-  @endif
-  
-  @if ($message = Session::get('sukses'))
-  // Notifikasi
-  swal ( "Berhasil" ,  "<?php echo $message ?>" ,  "success" )
-  @endif
+    @if ($message = Session::get('sukses'))
+    // Notifikasi
+    Swal.fire( "Berhasil" ,  "<?php echo $message ?>" ,  "success" )
+    @endif
+
+    @if ($message = Session::get('warning'))
+    // Notifikasi
+    Swal.fire( "Oops.." ,  "<?php echo $message ?>" ,  "warning" )
+    @endif
 </script>
+
+<!-- sweetalert -->
+<script src="{{ asset('assets/sweetalert/js/sweetalert.min.js') }}"></script>
+<!-- angular -->
+<script src="{{ asset('assets/angular/angular.min.js') }}"></script>  
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/sweetalert/css/sweetalert.css') }}">
 
 
 

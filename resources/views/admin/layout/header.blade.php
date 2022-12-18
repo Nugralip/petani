@@ -34,8 +34,8 @@
   
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
-  <script src="{{ asset('adminn/sweetalert/js/sweetalert.min.js') }}"></script>
-  <link rel="stylesheet" type="text/css" href="{{ asset('adminn/sweetalert/css/sweetalert.css') }}">
+  {{-- <script src="{{ asset('adminn/sweetalert/js/sweetalert.min.js') }}"></script>
+  <link rel="stylesheet" type="text/css" href="{{ asset('adminn/sweetalert/css/sweetalert.css') }}"> --}}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
