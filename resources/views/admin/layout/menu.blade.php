@@ -1,5 +1,5 @@
 <body class="navbar-fixed sidebar-fixed" id="body">  
-<div id="toaster"></div>
+{{-- <div id="toaster"></div> --}}
 
 <div class="wrapper">
       

@@ -11,6 +11,7 @@ class Tanah extends Model
 
     protected $fillable = [
         'id_tanah',
+        'picture',
         'tanah',
         'texture',
         'description',

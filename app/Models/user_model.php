@@ -19,4 +19,9 @@ class user_model extends Model
         return $query;
     }
 
+    // public function user()
+    // {
+    // 	return $this->hasOne('App\Model\Berita');
+    // }
+
 }

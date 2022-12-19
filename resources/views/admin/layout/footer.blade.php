@@ -30,12 +30,6 @@
     @endif
 </script>
 
-<!-- sweetalert -->
-<script src="{{ asset('assets/sweetalert/js/sweetalert.min.js') }}"></script>
-<!-- angular -->
-<script src="{{ asset('assets/angular/angular.min.js') }}"></script>  
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/sweetalert/css/sweetalert.css') }}">
-
 
 
 

@@ -221,29 +221,6 @@
         })
     }
 
-    // function cetak(){
-    //             $.ajax({
-    //                 url: "/admin/produk/cetak",
-    //                 method: "POST",
-    //                 data: $('#cariForm').serialize()
-    //             }).then(function (x){
-    //                 x = JSON.parse(x);
-    //                 if(x.status == "Success"){
-    //                     iziToast.success({
-    //                         title: 'Success',
-    //                         message: 'Data Print',
-    //                         position: 'topRight'
-    //                     });
-    //                     // showData(tgl,bulan,thn);
-    //                 }else{
-    //                     iziToast.error({
-    //                         title: 'Error',
-    //                         message: 'Data Not Deleted',
-    //                         position: 'topRight'
-    //                     });
-    //                 }
-    //             })
-    //         }  
 
     function tambahuser() {
         $.ajax({

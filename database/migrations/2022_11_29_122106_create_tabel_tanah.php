@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('tanahs', function (Blueprint $table) {
             $table->increments('id_tanah');
+            $table->string('picture');
             $table->string('tanah');
             $table->text('texture');
             $table->text('description');

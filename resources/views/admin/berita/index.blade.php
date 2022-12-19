@@ -1,22 +1,21 @@
 <div class="card p-2">
     <h2>Data {{$tabel}}</h2>
-    <div class="row my-3">
-        {{-- <div class="col-md-6 my-1">
-            <button class="btn btn-primary" onclick="tambah()">Tambah Data</button>
-        </div> --}}
-        <div class="col-md-3 my-1">
-            <input id="search" type="text" class="form-control" placeholder="Search">
-        </div>
-        <div class="col-md-2 my-1">
-            <select name="" id="" class="form-control">
-                <option value=" "> Select Option </option>
-            </select>
-        </div>
-        <div class="col-md-1 my-1">
-            <a href="produk/cetak" onclick="confirm('Apakah Kamu Ingin Mencetak Laporan Produk?')" class="btn btn-info"><i class="mdi mdi-printer"></i></a>
-            
-        </div>
-    </div>
+        <form id="cariForm" class="col-md-6 row my-1 mr-5" action="/admin/produk/cetak" method="post">
+            {{ csrf_field() }}
+                <div class="col-md-3 my-1">
+                <input id="tgl" name="tgl" type="number" class="form-control" placeholder="Tgl">
+            </div>
+            <div class="col-md-4 my-1">
+                <input id="bulan" name="bulan" type="number" class="form-control" placeholder="Bulan">
+            </div>
+            <div class="col-md-4 my-1">
+                <input id="thn" name="thn" type="number" class="form-control" placeholder="Thn">
+            </div>
+            <div class="col-md-1 my-1">
+                <button type="submit" class="btn btn-info mdi mdi-printer"></button>   
+                
+            </div>
+        </form>
     <div id="dataProduk">
         
     </div>
@@ -129,16 +128,18 @@
                 })
     }
     
-    let search = '';
-    let filter = '';
-    showData(search,filter);
-    function showData(search,filter){
+    let tgl = '';
+    let bulan = '';
+    let thn = '';
+    showData(tgl,bulan,thn);
+    function showData(tgl,bulan,thn){
         $.ajax({
             url:'/admin/berita/data',
             method:'GET',
             data:{
-                search:search,
-                filter:filter
+                tgl:tgl,
+                bulan:bulan,
+                thn:thn
             }
         }).then(function (x) {                   
             console.log(x);
@@ -146,14 +147,20 @@
             })
         }
 
-    $('#search').keyup(()=>{
-            search = $('#search').val();
-            showData(search,filter);
+    $('#tgl').keyup(()=>{
+            tgl = $('#tgl').val();
+            showData(tgl,bulan,thn);
         }
     )
-    $('#kata').change(()=>{
-            filter = $('#kata').val();
-            showData(search,filter);
+    $('#thn').keyup(()=>{
+            thn = $('#thn').val();
+            showData(tgl,bulan,thn);
+        }
+    )
+
+    $('#bulan').keyup(()=>{
+            bulan = $('#bulan').val();
+            showData(tgl,bulan,thn);
         }
     )
 

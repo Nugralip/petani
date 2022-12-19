@@ -28,9 +28,14 @@ class BeritaController extends Controller
     }
 
     public function data(Request $request){
-        $cari = $request->cari;
-        $filter = $request->filter;
-        $berita = Berita::where('title','like',"%".$cari."%")->paginate();
+        $tgl = $request->tgl;
+        $bulan = $request->bulan;
+        $thn = $request->thn;
+        if($tgl == ' '){
+            $berita = Berita::where('created_at','like',"%".$thn."-".$bulan."-".$tgl."%")->paginate();
+        }else{
+            $berita = Berita::where('created_at','like',"%".$thn."-".$bulan."%")->paginate();
+        }
         $data = array(
             'tabel' => 'Berita',
             'berita' => $berita
