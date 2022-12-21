@@ -5,6 +5,7 @@
         <th scope="col">No</th>
         <th scope="col">Produk</th>
         <th scope="col">Price</th>
+        <th scope='col'>Categories</th>
         <th scope="col">Description</th>
         <th scope="col">Procedur</th>
         <th scope="col">Superiority</th>
@@ -19,6 +20,7 @@
             <td scope="row">{{$no++}}</td>
             <td>{{$produk->produk}}</td>
             <td>{{$produk->price}}</td>
+            <td>{{$produk->id_kata.".".$produk->katagori}}</td>
             <td>{{$produk->description}}</td>
             <td>{{$produk->procedur}}</td>
             <td>{{$produk->superiority}}</td>

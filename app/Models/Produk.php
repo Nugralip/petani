@@ -13,6 +13,7 @@ class Produk extends Model
         'id_produk',
         'id_kata',
         'picture',
+        'katagori',
         'produk',
         'price',
         'description',
@@ -21,9 +22,14 @@ class Produk extends Model
         'deficiency',
     ];
 
-    public function updatedBy()
+    // public function updatedBy()
+    // {
+    //     return $this->hasOne('App\Models\User', 'id_produk', 'updated_by');
+    // }
+
+    public function Produk()
     {
-        return $this->hasOne('App\Models\User', 'id_produk', 'updated_by');
+    	return $this->hasOne('App\Models\Katagori','id_kata');
     }
 
 }

@@ -33,12 +33,15 @@
           <h5 class="modal-title" id="modalTitle">Modal title</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="tutup()" aria-label="Close"><i class="icon-close"></i></button>
         </div>
-        <form id="iniForm">
-            {{ csrf_field() }}
+        <form id="iniForm" class="iniForm" enctype="multipart/form-data">
         <div class="modal-body">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <input type="hidden" name="id" id="id" >
-            <div class="input-group mb-3">
+              <div class="input-group mb-3">
                 <input type="text" id="produk" class="form-control" placeholder="Produk" aria-describedby="basic-addon1" name="produk">
+              </div>
+              <div class="input-group mb-3">
+                <input type="file" id="image" class="form-control" placeholder="Picture" aria-describedby="basic-addon1" name="image">
               </div>
               
               <div class="input-group mb-3">
@@ -129,6 +132,7 @@
         $.ajax({
             url: "/admin/produk/update",
             method: "POST",
+
             data: $('#iniForm').serialize()
         }).then(function (x){
                     x = JSON.parse(x);
@@ -223,10 +227,14 @@
 
 
     function tambahuser() {
+        let formData = new FormData(iniForm);
+        formData.append('image', image);
         $.ajax({
             url: "/admin/produk/store",
-            method: "POST",
-            data: $('#iniForm').serialize()
+            data: formData,
+            type: "POST",
+            processData: false,
+            contentType: false,
         }).then(function(x) {
                 x = JSON.parse(x);
                 if(x.status == "Success"){

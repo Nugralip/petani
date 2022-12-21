@@ -16,8 +16,12 @@ class Katagori extends Model
         'updated_by',
     ];
 
-    public function updatedBy()
+    // public function updatedBy()
+    // {
+    //     return $this->hasOne('App\Models\User', 'id_produk', 'updated_by');
+    // }
+    public function katagori()
     {
-        return $this->hasOne('App\Models\User', 'id_produk', 'updated_by');
+    	return $this->belongsTo('App\Models\Produk','id_kata');
     }
 }

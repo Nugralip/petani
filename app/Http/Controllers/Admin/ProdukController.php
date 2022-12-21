@@ -33,9 +33,9 @@ class ProdukController extends Controller
         $bulan = $request->bulan;
         $thn = $request->thn;
         if($tgl == ' '){
-            $produk = Produk::where('created_at','like',"%".$thn."-".$bulan."-".$tgl."%")->paginate();
+            $produk = Produk::where('created_at','like',"%".$thn."-".$bulan."-".$tgl."%")->paginate()->all();
         }else{
-            $produk = Produk::where('created_at','like',"%".$thn."-".$bulan."%")->paginate();
+            $produk = Produk::where('created_at','like',"%".$thn."-".$bulan."%")->paginate()->all();
         }
         
         // $produk = Produk::whereYear('created_at',$thn)->whereMonth('created_at',$bulan)->whereDay('created_at',$tgl)->paginate();
@@ -50,6 +50,7 @@ class ProdukController extends Controller
     public function store(Request $request){
         $this->validate($request,[
                 'kata' => 'required',
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                 'produk' => 'required',
                 'price' => 'required',
                 'description' => 'required',
@@ -57,10 +58,16 @@ class ProdukController extends Controller
                 'superiority' => 'required',
                 'deficiency' => 'required',
         ]);
+        
+        $file = $request->file('image');
+
+	    $tujuan_upload = 'image/produk';
+        $file->move($tujuan_upload,$file->getClientOriginalName());
 
         $produk = Produk::create([
                 'id_kata' => $request->kata,
                 'produk' => $request->produk,
+                'picture' => $file->getClientOriginalName(),
                 'price' => $request->price,
                 'description' => $request->description,
                 'procedur' => $request->procedur,
