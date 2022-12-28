@@ -32,10 +32,10 @@ class ProdukController extends Controller
         $tgl = $request->tgl;
         $bulan = $request->bulan;
         $thn = $request->thn;
-        if($tgl == ' '){
-            $produk = Produk::where('created_at','like',"%".$thn."-".$bulan."-".$tgl."%")->paginate()->all();
-        }else{
+        if($tgl == ''){
             $produk = Produk::where('created_at','like',"%".$thn."-".$bulan."%")->paginate()->all();
+        }else{ 
+            $produk = Produk::where('created_at','like',"%".$thn."-".$bulan."-".$tgl."%")->paginate()->all();
         }
         
         // $produk = Produk::whereYear('created_at',$thn)->whereMonth('created_at',$bulan)->whereDay('created_at',$tgl)->paginate();
