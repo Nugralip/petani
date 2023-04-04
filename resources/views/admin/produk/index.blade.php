@@ -99,7 +99,6 @@
     }
 
     function update(id) {
-         
         $.ajax({
             url:"/admin/produk/edit/"+id,
             method:"GET",
@@ -129,11 +128,14 @@
     }
 
     function updateuser() {
+        let formData = new FormData(iniForm);
+        formData.append('image', image);
         $.ajax({
             url: "/admin/produk/update",
-            method: "POST",
-
-            data: $('#iniForm').serialize()
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
         }).then(function (x){
                     x = JSON.parse(x);
                     if(x.status == "Success"){

@@ -1,17 +1,25 @@
 <div class="card p-2">
     <h2>Data {{$tabel}}</h2>
     <div class="row my-3">
-        <div class="col-md-7 my-1">
+        <div class="col-md-5 my-1">
             <button class="btn btn-primary" onclick="tambah()">Tambah Data</button>
         </div>
-        <div class="col-md-3 my-1">
-            <input id="search" type="text" class="form-control" placeholder="Search">
-        </div>
-        <div class="col-md-2 my-1">
-            <select name="" id="" class="form-control">
-                <option value=" "> Select Option </option>
-            </select>
-        </div>
+        <form id="cariForm" class="col-md-6 row my-1 mr-5" action="/admin/tanah/cetak" method="post">
+            {{ csrf_field() }}
+                <div class="col-md-3 my-1">
+                <input id="tgl" name="tgl" type="number" class="form-control" placeholder="Tgl">
+            </div>
+            <div class="col-md-4 my-1">
+                <input id="bulan" name="bulan" type="number" class="form-control" placeholder="Bulan">
+            </div>
+            <div class="col-md-4 my-1">
+                <input id="thn" name="thn" type="number" class="form-control" placeholder="Thn">
+            </div>
+            <div class="col-md-1 my-1">
+                <button type="submit" class="btn btn-info"><i class="mdi mdi-printer"></i> </button>   
+                
+            </div>
+        </form>
     </div>
     <div id="dataTanah">
         
@@ -26,11 +34,14 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="tutup()" aria-label="Close"><i class="icon-close"></i></button>
         </div>
         <form id="iniForm">
-            {{ csrf_field() }}
         <div class="modal-body">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <input type="hidden" name="id" id="id" >
-            <div class="input-group mb-3">
+              <div class="input-group mb-3">
                 <input type="text" id="tanah" class="form-control" placeholder="Tanah" aria-describedby="basic-addon1" name="tanah">
+              </div>
+              <div class="input-group mb-3">
+                <input type="file" id="image" class="form-control" placeholder="Picture" aria-describedby="basic-addon1" name="image">
               </div>
               
               <div class="input-group mb-3">
@@ -75,7 +86,7 @@
     function tutup() {
         $('#formModal').hide();
         $('#iniForm')[0].reset();
-        showData(search,filter);
+        showData(tgl,bulan,thn);
     }
 
     function update(id) {
@@ -108,10 +119,14 @@
     }
 
     function updateuser() {
+        let formData = new FormData(iniForm);
+        formData.append('image', image);
         $.ajax({
             url: "/admin/tanah/update",
-            method: "POST",
-            data: $('#iniForm').serialize()
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
         }).then(function (x){
                     x = JSON.parse(x);
                     if(x.status == "Success"){
@@ -135,16 +150,18 @@
         
     }
     
-    let search = '';
-    let filter = '';
-    showData(search,filter);
-    function showData(search,filter){
+    let tgl = '';
+    let bulan = '';
+    let thn = '';
+    showData(tgl,bulan,thn);
+    function showData(tgl,bulan,thn){
         $.ajax({
             url:'/admin/tanah/data',
             method:'GET',
             data:{
-                search:search,
-                filter:filter
+                tgl:tgl,
+                bulan:bulan,
+                thn:thn
             }
         }).then(function (x) {                   
             console.log(x);
@@ -152,14 +169,20 @@
             })
         }
 
-    $('#search').keyup(()=>{
-            search = $('#search').val();
-            showData(search,filter);
+        $('#tgl').keyup(()=>{
+            tgl = $('#tgl').val();
+            showData(tgl,bulan,thn);
         }
     )
-    $('#kata').change(()=>{
-            filter = $('#kata').val();
-            showData(search,filter);
+    $('#thn').keyup(()=>{
+            thn = $('#thn').val();
+            showData(tgl,bulan,thn);
+        }
+    )
+
+    $('#bulan').keyup(()=>{
+            bulan = $('#bulan').val();
+            showData(tgl,bulan,thn);
         }
     )
 
@@ -185,7 +208,7 @@
                             message: 'Data Deleted',
                             position: 'topRight'
                         });
-                        showData(search,filter);
+                        showData(tgl,bulan,thn);
                     }else{
                         iziToast.error({
                             title: 'Error',
@@ -199,10 +222,14 @@
     }
 
     function tambahuser() {
+        let formData = new FormData(iniForm);
+        formData.append('image', image);
         $.ajax({
             url: "/admin/tanah/store",
-            method: "POST",
-            data: $('#iniForm').serialize()
+            type: "POST",
+            data: formData,
+            processData:false,
+            contentType: false,
         }).then(function(x) {
                 x = JSON.parse(x);
                 if(x.status == "Success"){
@@ -211,7 +238,7 @@
                                 message: 'Data Tambah',
                                 position: 'topRight'
                             });
-                            showData(search,filter);
+                            showData(tgl,bulan,thn);
                             tutup();
                         }else{
                             iziToast.error({
@@ -222,7 +249,4 @@
                         }
             })
     }
-    
-
-
 </script>

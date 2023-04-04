@@ -30,6 +30,19 @@ Route::get('/edit/{id}', 'App\Http\Controllers\Admin\MidController@edited');
 Route::post('/mid/proses', 'App\Http\Controllers\Admin\MidController@update');
 Route::get('/mid/dalete/{id}', 'App\Http\Controllers\Admin\MidController@dalete');
 
+Route::get('/','App\Http\Controllers\User\HomeController@index')->name('home');
+Route::get('/berita/{id}','App\Http\Controllers\User\HomeController@detail')->name('berita.detail');
+Route::get('/berita','App\Http\Controllers\User\HomeController@berita')->name('berita');
+Route::get('/berita/detail/{id}','App\Http\Controllers\User\HomeController@bdetail')->name('berita.detail');
+Route::get('/produk/{id}','App\Http\Controllers\User\HomeController@produk')->name('produk');
+Route::get('/produk/detail/{id}','App\Http\Controllers\User\HomeController@pdetail')->name('produk.detail');
+
+Route::get('/log','App\Http\Controllers\User\HomeController@login')->name('login');
+Route::get('/reg','App\Http\Controllers\User\HomeController@regis')->name('register');
+Route::get('/out','App\Http\Controllers\User\HomeController@out')->name('logout');
+Route::post('/proreg','App\Http\Controllers\User\HomeController@proreg')->name('proreg');
+Route::post('/prolog','App\Http\Controllers\User\HomeController@prolog')->name('prolog');
+
 Route::group(['prefix' => '',  'namespace' => 'App\Http\Controllers\Admin'], function(){
 
     Route::group(['prefix' => 'admin'], function () {
@@ -57,6 +70,7 @@ Route::group(['prefix' => '',  'namespace' => 'App\Http\Controllers\Admin'], fun
             Route::get('/edit/{id}', 'KatagoriController@edit')->name('katagori.edit');
             Route::post('/update', 'KatagoriController@update')->name('katagori.update');
             Route::get('/hapus/{id}', 'KatagoriController@destroy')->name('katagori.delete');
+            Route::post('/cetak', 'KatagoriController@cetakpdf')->name('produk.cetak');
         });
 
         //-
@@ -68,6 +82,7 @@ Route::group(['prefix' => '',  'namespace' => 'App\Http\Controllers\Admin'], fun
             Route::get('/edit/{id}', 'BeritaController@edit')->name('berita.edit');
             Route::post('/update', 'BeritaController@update')->name('berita.update');
             Route::get('/hapus/{id}', 'BeritaController@destroy')->name('berita.delete');
+            Route::post('/cetak', 'BeritaController@cetakpdf')->name('produk.cetak');
         });
         //-
         Route::group(['prefix' => '/user'], function () {
@@ -88,6 +103,7 @@ Route::group(['prefix' => '',  'namespace' => 'App\Http\Controllers\Admin'], fun
             Route::get('/edit/{id}', 'TanahController@edit')->name('tanah.edit');
             Route::post('/update', 'TanahController@update')->name('tanah.update');
             Route::get('/hapus/{id}', 'TanahController@destroy')->name('tanah.delete');
+            Route::post('/cetak', 'TanahController@cetakpdf')->name('produk.cetak');
         });
 
     });

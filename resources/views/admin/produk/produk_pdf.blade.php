@@ -25,6 +25,7 @@
                 <th scope="col">Procedur</th>
                 <th scope="col">Superiority</th>
                 <th scope="col">Deficiency</th>
+				<th scope="col">Tanggal</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -38,6 +39,7 @@
             <td>{{$produk->procedur}}</td>
             <td>{{$produk->superiority}}</td>
             <td>{{$produk->deficiency}}</td>
+			<td>{{$produk->created_at}}</td>
           </tr>
         @endforeach
 		</tbody>

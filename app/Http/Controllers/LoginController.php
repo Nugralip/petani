@@ -48,7 +48,6 @@ class LoginController extends Controller
         Session()->forget('id_user');
         Session()->forget('nama');
         Session()->forget('username');
-        Session()->forget('akses_level');
         return redirect('/login')->with(['sukses' => 'Anda berhasil logout']);
     }
 }

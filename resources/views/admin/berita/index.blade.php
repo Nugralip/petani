@@ -1,6 +1,6 @@
 <div class="card p-2">
     <h2>Data {{$tabel}}</h2>
-        <form id="cariForm" class="col-md-6 row my-1 mr-5" action="/admin/produk/cetak" method="post">
+        <form id="cariForm" class="col-md-6 row my-1 mr-5" action="/admin/berita/cetak" method="post">
             {{ csrf_field() }}
                 <div class="col-md-3 my-1">
                 <input id="tgl" name="tgl" type="number" class="form-control" placeholder="Tgl">
@@ -76,7 +76,7 @@
     function tutup() {
         $('#formModal').hide();
         $('#iniForm')[0].reset();
-        showData(search,filter);
+        showData(tgl,bulan,thn);
     }
 
     function update(id) {

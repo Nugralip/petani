@@ -5,10 +5,10 @@
           <tr>
             <th>No</th>
             <th>Nama</th>
-            <th>ID</th>
             <th>Username</th>
-            <th>Level</th>
+            <th>Lvl</th>
             <th>Alamat</th>
+            <th>Action</th>
             <th></th>
           </tr>
         </thead>

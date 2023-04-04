@@ -1,94 +1,120 @@
-<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
-  <div class="carousel-indicators">
-    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
-  </div>
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="{{ asset('assets/image/photo/4.png') }}" class="d-block w-100" data-bs-interval="800" alt="...">
-      <div class="carousel-caption d-none d-md-block">
-        <h3>First slide label</h3>
-        <p>Some representative placeholder content for the first slide.</p>
-      </div>
-    </div>
-    <div class="carousel-item">
-      <img src="{{ asset('assets/image/photo/5.png') }}" class="d-block w-100" data-bs-interval="800" alt="...">
-      <div class="carousel-caption d-none d-md-block">
-        <h3>Second slide label</h3>
-        <p>Some representative placeholder content for the second slide.</p>
-      </div>
-    </div>
-    <div class="carousel-item">
-      <img src="{{ asset('assets/image/photo/6.png') }}" class="d-block w-100" data-bs-interval="800" alt="...">
-      <div class="carousel-caption d-none d-md-block">
-        <h3>Third slide label</h3>
-        <p>Some representative placeholder content for the third slide.</p>
-      </div>
-    </div>
-  </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
+{{-- caroasel --}}
+<div class="row mb-20">
+	<div class="col-md-12">
+		<div class="single-product-slider">
+			<div id='carousel-custom' class='carousel slide' data-ride='carousel'>
+				<div class='carousel-outer'>
+					<!-- me art lab slider -->
+					<div class='carousel-inner '>
+						<div class='item active'>
+							<img style="width: 100%" src='{{ asset('image/petani1.png')}}' alt='' data-zoom-image="images/shop/single-products/product-1.jpg" />
+						</div>
+						<div class='item'>
+							<img style="width: 100%" src='{{ asset('image/petani2.png')}}' alt='' data-zoom-image="images/shop/single-products/product-2.jpg" />
+						</div>
+						
+						<div class='item'>
+							<img style="width: 100%" src='{{ asset('image/petani3.png')}}' alt='' data-zoom-image="images/shop/single-products/product-3.jpg" />
+						</div>
+						
+					</div>
+					
+					<!-- sag sol -->
+					<a class='left carousel-control' href='#carousel-custom' data-slide='prev'>
+						<i class="tf-ion-ios-arrow-left"></i>
+					</a>
+					<a class='right carousel-control' href='#carousel-custom' data-slide='next'>
+						<i class="tf-ion-ios-arrow-right"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
-<div class="container px-5">
-  <div class="berita ">
-    <div class="row">
-      <h2 class="text-petani col-8 ">Berita Populer</h2>
-      {{-- <h2 class="col-md-auto"></h2> --}}
-      <a href="" class="btn bg-petani btn-dark col-4"> <span><b>Lainnya</b></span></a>
-    </div>
-    <hr class="md-12">
-    <div class="row">
-      <div class="col-md-4 mb-2">
-        <div class="card">
-          <img src="{{ asset('assets/image/photo/1.png') }}" class="card-img-top" alt="...">
-        
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="btn bg-petani btn-dark w-100">View</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 mb-2">
-        <div class="card">
-          <img src="{{ asset('assets/image/photo/1.png') }}" class="card-img-top" alt="...">
-        
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="btn bg-petani btn-dark w-100">View</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 mb-2">
-        <div class="card">
-          <img src="{{ asset('assets/image/photo/1.png') }}" class="card-img-top" alt="...">
-        
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="btn bg-petani btn-dark w-100">View</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+{{-- Berita Dan Lainnya --}}
+<section class="product-category section">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 mt-30">
+				<div class="title-left">
+					<h2>Berita Dan Updates</h2>
+						
+				</div>				
+			</div>
+		</div>
+		<div class="row">
+			@foreach ($beritas as $beritas)
+			<div class="col-md-4">
+				<div class="post">
+					<div class="post-thumb">
+					<a href="berita/{{$beritas->id_berita}}">
+						<img class="img-responsive" src="{{  asset('image/berita/'.$beritas->picture)}}" alt="">
+					</a>
+					</div>
+					<h2 class="post-title txt-oev-2"><a href="berita/{{$beritas->id_berita}}"">{{$beritas->title}}</a></h2>
+					<div class="post-meta">
+					<ul>
+						<li>
+						<i class="tf-ion-ios-calendar"></i> {{$beritas->created_at}}
+						</li>
+					</ul>
+					</div>
+					<div class="post-content">
+					<p class="txt-oev-3"> {{$beritas->isi}} </p>
+					<a href="berita/{{$beritas->id_berita}}" class="btn btn-main">Detail Berita</a>
+					</div>
+				</div>
+			</div>	
+			@endforeach
+		</div>
+	</div>
+</section>
 
-<div class="bg-gradasi">
-  <div class="container">
-    <div class="card background-petani" style="bag">
-      <h2>Harga Pasar</h2>
-    </div>
+{{--Layanan--}}
+<section class="products section bg-gray">
+	<div class="container">
+		<div class="row">
+			<div class="title text-center">
+				<h2>Produk Pertanian</h2>
+			</div>
+		</div>
+		<div class="row">
+			@foreach ($produks as $produks)
+				<div class="col-md-4 col-xs-6">
+					<div class="product-item">
+						<div class="product-thumb">
+							<img class="img-responsive" src="{{ asset('image/produk/'.$produks->picture) }}" alt="product-img" />
+							
+						</div>
+						<div class="product-content">
+							<h4><a href="/produk/detail/{{$produks->id_produk}}">{{$produks->produk}}</a></h4>
+							<p class="price">{{$produks->description}}</p>
+						</div>
+					</div>
+				</div>
+			@endforeach
+		</div>
+	</div>
+</section>
 
-  </div>
-</div>
-
+{{-- Link Terkait --}}
+<section class="team-members ">
+	<div class="container">
+		<div class="row">
+			<div class="title"><h2>Jenis Tanah</h2></div>
+		</div>
+		<div class="row">
+			<div class="d-flex justify-content-between">
+				@foreach ($tanahs as $tanahs)
+					<div class="col-md-3 col-xs-4" style="box-shadow: 12px">
+						<div class="team-member text-center">
+							<img class="img-circle" src="{{ asset('image/tanah/'.$tanahs->picture) }}">
+							<h4>{{$tanahs->tanah}}</h4>
+						</div>
+					</div>
+				@endforeach
+			</div>
+		</div>
+	</div>
+</section>

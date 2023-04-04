@@ -22,7 +22,7 @@
   <link rel="stylesheet" href="{{ asset('adminn/plugins/toaster/toastr.min.css') }}">
   <link id="main-css-href" rel="stylesheet" href="{{ asset('adminn/css/style.css') }}" />
 
-  <link href="{{ asset('adminn/images/favicon.png') }}" rel="shortcut icon" />
+  <link href="{{ asset('image/logo.png') }}" rel="shortcut icon" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css" />
   
   

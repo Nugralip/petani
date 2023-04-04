@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Katagori;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
 class KatagoriController extends Controller
 {
@@ -26,10 +27,16 @@ class KatagoriController extends Controller
     }
 
     public function data(Request $request){
-        $cari = $request->cari;
-        $filter = $request->filter;
-        $katagori = Katagori::where('katagori','like',"%".$cari."%")->paginate();
+        $tgl = $request->tgl;
+        $bulan = $request->bulan;
+        $thn = $request->thn;
+        if($tgl == ''){
+            $katagori = Katagori::where('created_at','like',"%".$thn."-".$bulan."%")->paginate()->all();
+        }else{ 
+            $katagori = Katagori::where('created_at','like',"%".$thn."-".$bulan."-".$tgl."%")->paginate()->all();
+        }
         $data = array(
+            'tabel' => 'Produk',
             'katagori' => $katagori
         );
         return view('admin/katagori/data', $data);
@@ -88,5 +95,18 @@ class KatagoriController extends Controller
             echo json_encode(['status' => 'Error', 'data' => $data]);
             return;
         }
+    }
+    public function cetakpdf(Request $request){
+        $tgl = $request->tgl;
+        $bulan = $request->bulan;
+        $thn = $request->thn;
+        if($tgl == ' '){
+            $katagori = Katagori::where('created_at','like',"%".$thn."-".$bulan."-".$tgl."%")->paginate();
+        }else{
+            $katagori = Katagori::where('created_at','like',"%".$thn."-".$bulan."%")->paginate();
+        }
+
+        $pdf = PDF::loadview('admin.katagori.print_katagori',['katagori'=>$katagori]);
+        return $pdf->stream();
     }
 }

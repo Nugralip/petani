@@ -6,11 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Models\Katagori;
 use App\Models\Tanah;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Svg\Tag\Rect;
 
 class TanahController extends Controller
 {
     public function index(){
+        if(Session()->get('username')=="") {
+            return redirect('/login')->with(['pesan'=>'belum_login']);
+        }
         $tanah = Tanah::get();
         $katagori = Katagori::get();
         $data = array(
@@ -25,9 +29,14 @@ class TanahController extends Controller
     }
 
     public function data(Request $request){
-        $cari = $request->cari;
-        $filter = $request->filter;
-        $tanah = Tanah::where('tanah','like',"%".$cari."%")->paginate();
+        $tgl = $request->tgl;
+        $bulan = $request->bulan;
+        $thn = $request->thn;
+        if($tgl == ''){
+            $tanah = Tanah::where('created_at','like',"%".$thn."-".$bulan."%")->paginate()->all();
+        }else{ 
+            $tanah = Tanah::where('created_at','like',"%".$thn."-".$bulan."-".$tgl."%")->paginate()->all();
+        }
         $data = array(
             'tabel' => 'tanah',
             'tanah' => $tanah
@@ -46,8 +55,14 @@ class TanahController extends Controller
                 'recomendation' => 'required',
         ]);
 
+        $file = $request->file('image');
+        $nmfile = date('dmY')."_".$file->getClientOriginalName();
+	    $tujuan_upload = 'image/tanah';
+        $file->move($tujuan_upload,$nmfile);
+
         $tanah = Tanah::create([
                 'tanah' => $request->tanah,
+                'picture' => $nmfile,
                 'texture' => $request->texture,
                 'description' => $request->description,
                 'procedur' => $request->procedur,
@@ -75,18 +90,33 @@ class TanahController extends Controller
     }
 
     public function update(Request $request){
-        if(Session()->get('username')=="") {
-            return redirect('/login')->with(['pesan'=>'belum_login']);
+        // if(Session()->get('username')=="") {
+        //     return redirect('/login')->with(['pesan'=>'belum_login']);
+        // }
+        if($request->file('image') == NULL){
+            $tanah = Tanah::where('id_tanah', $request->id)->update([
+                'tanah' => $request->tanah,
+                'texture' => $request->texture,
+                'description' => $request->description,
+                'procedur' => $request->procedur,
+                'superiority' => $request->superiority,
+                'recomendation' => $request->recomendation,
+            ]);
+        }else{
+            $file = $request->file('image');
+            $nmfile = date('dmY')."_".$file->getClientOriginalName();
+            $tujuan_upload = 'image/tanah';
+            $file->move($tujuan_upload,$nmfile);
+            $tanah = Tanah::where('id_tanah', $request->id)->update([
+                'tanah' => $request->tanah,
+                'picture' => $nmfile,
+                'texture' => $request->texture,
+                'description' => $request->description,
+                'procedur' => $request->procedur,
+                'superiority' => $request->superiority,
+                'recomendation' => $request->recomendation,
+            ]); 
         }
-        $tanah = Tanah::where('id_tanah', $request->id)->update([
-            'tanah' => $request->tanah,
-            'texture' => $request->texture,
-            'description' => $request->description,
-            'procedur' => $request->procedur,
-            'superiority' => $request->superiority,
-            'recomendation' => $request->recomendation,
-        ]);
-
         if ($tanah) {
             echo json_encode(['status' => 'Success']);
             return;
@@ -105,5 +135,18 @@ class TanahController extends Controller
             echo json_encode(['status' => 'Error', 'data' => $data]);
             return;
         }
+    }
+    public function cetakpdf(Request $request){
+        $tgl = $request->tgl;
+        $bulan = $request->bulan;
+        $thn = $request->thn;
+        if($tgl == ' '){
+            $tanah = Tanah::where('created_at','like',"%".$thn."-".$bulan."-".$tgl."%")->paginate();
+        }else{
+            $tanah = Tanah::where('created_at','like',"%".$thn."-".$bulan."%")->paginate();
+        }
+
+        $pdf = PDF::loadview('admin.tanah.print_tanah',['tanah'=>$tanah]);
+        return $pdf->stream();
     }
 }

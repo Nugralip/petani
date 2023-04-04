@@ -44,32 +44,25 @@ class BeritaController extends Controller
     }
 
     public function store(Request $request){
-        $this->validate($request,[
-                // 'picture' => 'required|image|max:10240|mimes:jpeg,jpg,gif,bmp,png',
-                'title' => 'required',
-                'isi' => 'required',
-                'status' => 'required',
-        ]);
+        $slun = preg_replace("/[^a-zA-Z]/", "", $request->title);
 
-        $slun = preg_replace("/[^a-zA-Z]/", " ", $request->title);
-
-        // $image = $request->file('picture');
-        // $image->storeAs('public/image', $image->hashName());
+        $file = $request->file('image');
+        $nmfile = date('dmY')."_".$file->getClientOriginalName();
+	    $tujuan_upload = 'image/berita';
+        $file->move($tujuan_upload,$nmfile);
 
         $berita = Berita::create([
-                'id_user' => 1,
-                // 'picture' => $image->hashName(),
+                'id_user' => $request->id_user,
+                'picture' => $nmfile,
                 'title' => $request->title ,
                 'slun' => $slun,
                 'isi' => $request ->isi,
-                'status' => $request ->status,
+                'status' => 'public',
         ]);
-        if ($berita) {
-            echo json_encode(['status' => 'Success', 'data' => $berita]);
-            return;
+        if($berita){
+            return redirect('/');
         }else{
-            echo json_encode(['status' => 'Error', 'data' => $berita]);
-            return;
+            return redirect('/berita');
         }
     }
 
@@ -110,10 +103,17 @@ class BeritaController extends Controller
         }
     }
 
-    public function cetakpdf(){
-        $berita = Berita::all();
+    public function cetakpdf(Request $request){
+        $tgl = $request->tgl;
+        $bulan = $request->bulan;
+        $thn = $request->thn;
+        if($tgl == ' '){
+            $berita = berita::where('created_at','like',"%".$thn."-".$bulan."-".$tgl."%")->paginate();
+        }else{
+            $berita = berita::where('created_at','like',"%".$thn."-".$bulan."%")->paginate();
+        }
 
-        $pdf = PDF::loadview('admin.produk.produk_pdf',['produk'=>$berita]);
+        $pdf = PDF::loadview('admin.berita.print_berita',['berita'=>$berita]);
         return $pdf->stream();
     }
 }

@@ -13,6 +13,9 @@ class MidController extends Controller
         if(Session()->get('username')=="") {
             return redirect('/login')->with(['pesan'=>'belum_login']);
         }
+        if(Session()->get('username')=="") {
+            return redirect('/login')->with(['pesan'=>'belum_login']);
+        }
         $mid = new mid();
         $tabel = $mid->index();
         $data = array(  'title'     => 'Dashboard Admin',
@@ -31,17 +34,17 @@ class MidController extends Controller
         return view('admin/layout/wrapper',$data);
     }
     public function prosest(Request $request){
-        DB::table('mid')->insert([
+        DB::table('mids')->insert([
             'username'  => $request->username,
-            'nama'      =>$request->nama,
+            'name'      =>$request->nama,
             'level'      =>$request->level,
-            'alamat'    =>$request->alamat
+            'address'    =>$request->alamat
             ]);
         
         return redirect('/mid');
     }
     public function edited($id){
-        $tabel = DB::table('mid')->where('id', $id)->get();
+        $tabel = DB::table('mids')->where('id_user', $id)->get();
         $data = array(  'title'     => 'Dashboard Admin',
                         'marge'     => 'admin/edit',
                         'mid'       => $tabel,
@@ -52,11 +55,11 @@ class MidController extends Controller
 
     public function update(Request $request)
     {
-        DB::table('mid')->where('id',$request->id)->update([
+        DB::table('mids')->where('id_user',$request->id)->update([
             'username'  => $request->username,
-            'nama'      =>$request->nama,
+            'name'      =>$request->nama,
             'level'      =>$request->level,
-            'alamat'    =>$request->alamat  
+            'address'    =>$request->alamat  
         ]);
         
         return redirect('/mid');
@@ -64,7 +67,7 @@ class MidController extends Controller
 
     public function dalete($id)
     {
-        DB::table('mid')->where('id',$id)->delete();
+        DB::table('mids')->where('id_user',$id)->delete();
         
         return redirect('/mid');
     }

@@ -17,7 +17,7 @@
           <tr>
             <td scope="row">{{$no++}}</td>
             <td>{{$berita->id_user}}</td>
-            <td>{{$berita->picture}}</td>
+            <td><img style="max-width: 100px" src="{{ asset('image/berita/'.$berita->picture) }}" alt=""></td></td>
             <td>{{$berita->title}}</td>
             <td>{{$berita->isi}}</td>
             <td>{{$berita->status}}</td>

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Katagori;
 use App\Models\Produk;
-use App\Models\Tanah;
+// use App\Models\Tanah;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Http\Request;
 
@@ -37,9 +37,7 @@ class ProdukController extends Controller
         }else{ 
             $produk = Produk::where('created_at','like',"%".$thn."-".$bulan."-".$tgl."%")->paginate()->all();
         }
-        
-        // $produk = Produk::whereYear('created_at',$thn)->whereMonth('created_at',$bulan)->whereDay('created_at',$tgl)->paginate();
-        // $produk = Produk::statement('');
+
         $data = array(
             'tabel' => 'Produk',
             'produk' => $produk
@@ -60,14 +58,14 @@ class ProdukController extends Controller
         ]);
         
         $file = $request->file('image');
-
+        $nmfile = date('dmY')."_".$file->getClientOriginalName();
 	    $tujuan_upload = 'image/produk';
-        $file->move($tujuan_upload,$file->getClientOriginalName());
+        $file->move($tujuan_upload,$nmfile);
 
         $produk = Produk::create([
                 'id_kata' => $request->kata,
                 'produk' => $request->produk,
-                'picture' => $file->getClientOriginalName(),
+                'picture' => $nmfile,
                 'price' => $request->price,
                 'description' => $request->description,
                 'procedur' => $request->procedur,
@@ -95,16 +93,35 @@ class ProdukController extends Controller
     }
 
     public function update(Request $request){
+    
+        if($request->file('image') == NULL){
+            $produk = Produk::where('id_produk',$request->id)->update([
+                'id_kata' => $request->kata,
+                'produk' => $request->produk,
+                'price' => $request->price,
+                'description' => $request->description,
+                'procedur' => $request->procedur,
+                'superiority' => $request->superiority,
+                'deficiency' => $request->deficiency
+            ]);
+        }else{
+            $file = $request->file('image');
+            $nmfile = date('dmY')."_".$file->getClientOriginalName();
+            $tujuan_upload = 'image/produk';
+            $file->move($tujuan_upload,$nmfile);
+            $produk = Produk::where('id_produk',$request->id)->update([
+                'id_kata' => $request->kata,
+                'produk' => $request->produk,
+                'picture' => $nmfile,
+                'price' => $request->price,
+                'description' => $request->description,
+                'procedur' => $request->procedur,
+                'superiority' => $request->superiority,
+                'deficiency' => $request->deficiency
+            ]);
+        }
 
-        $produk = Produk::where('id_produk',$request->id)->update([
-            'id_kata' => $request->kata,
-            'produk' => $request->produk,
-            'price' => $request->price,
-            'description' => $request->description,
-            'procedur' => $request->procedur,
-            'superiority' => $request->superiority,
-            'deficiency' => $request->deficiency
-        ]);
+        
 
         if ($produk) {
             echo json_encode(['status' => 'Success']);

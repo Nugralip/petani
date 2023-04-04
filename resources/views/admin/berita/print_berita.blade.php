@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Laporan Produk</title>
+	<title>Laporan Berita</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
@@ -12,32 +12,30 @@
 		}
 	</style>
 	<center>
-		<h5>Laporan Produk</h5>
+		<h5>Laporan Berita</h5>
 	</center>
  
 	<table class='table table-bordered'>
 		<thead>
 			<tr>
 				<th scope="col">No</th>
-                <th scope="col">Produk</th>
-                <th scope="col">Price</th>
-                <th scope="col">Description</th>
-                <th scope="col">Procedur</th>
-                <th scope="col">Superiority</th>
-                <th scope="col">Deficiency</th>
+                <th scope="col">Gambar</th>
+                <th scope="col">Judul</th>
+                <th scope="col">Isi</th>
+                <th scope="col">Status</th>
+				<th scope="col">Tanggal</th>
 			</tr>
 		</thead>
 		<tbody>
 			<?php $no=1; ?>
-            @foreach ($produk as $produk)
+            @foreach ($berita as $berita)
           <tr>
             <td scope="row">{{$no++}}</td>
-            <td>{{$produk->picture}}</td>
-            <td>{{$produk->price}}</td>
-            <td>{{$produk->description}}</td>
-            <td>{{$produk->procedur}}</td>
-            <td>{{$produk->superiority}}</td>
-            <td>{{$produk->deficiency}}</td>
+            <td>{{$berita->picture}}</td>
+            <td>{{$berita->title}}</td>
+            <td>{{$berita->isi}}</td>
+            <td>{{$berita->status}}</td>
+			<td>{{$berita->created_at}}</td>
           </tr>
         @endforeach
 		</tbody>
